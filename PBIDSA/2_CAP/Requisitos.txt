@@ -1,0 +1,11 @@
+PERGUNTAS:
+
+
+1 - Qual o valor total vendido?
+2 - Quantas vendas foam realizadas por categoria de produtos?
+3 - Quantas vendas foram realizadas por país considerando a prioridade de entrega?
+4 - Qual foi a média de desconto nas vendas por subcategoria de produtos?
+5 - Quais países tiveram a maior média de valor de venda? Demonstra com mapa
+
+
+O dashboard deve dar ao usuário a possibilidade de filtrar os dados por ano, segmento e por país

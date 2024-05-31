@@ -1,0 +1,12 @@
+COMO FUNCIONA O DIAL GAUGE? - PONTEIRO DE VELOCÍMETRO
+
+-> Chart Name = Valor que vai aparecer no INDICADOR do VELOCÍMETRO
+-> Minimo = Mínimo do valor aceito (por exemplo: 0)
+-> Maximo = Máximo valor aceito para o velocímetro (por exemplo: 300)
+-> Target Start = Sempre é o mínimo, pois é onde se começa o "alvo"
+-> Target End = É o limite aceito, como se fosse o limite de velocidade, por exemplo: 60. Qualquer valor acima disso será amarelo, passou do "target"/aceito
+-> Actual Start = É o limite intermediário, é onde se acredita que está entre o aceitável e o máximo.
+-> Actual End = Vazio
+-> Point Value = É o valor onde o ponteiro/indicador estará no velocímetro
+
+
