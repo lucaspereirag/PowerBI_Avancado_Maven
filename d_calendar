@@ -1,0 +1,40 @@
+let
+    Fonte = #date(2022, 1, 1),
+
+    d_calendar = List.Dates(
+     Fonte,
+     Number.From(DateTime.LocalNow()) - Number.From(Fonte),
+     #duration(1,0,0,0)
+),
+    #"Convertido para Tabela" = Table.FromList(d_calendar, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+    #"Colunas Renomeadas" = Table.RenameColumns(#"Convertido para Tabela",{{"Column1", "Data"}}),
+    #"Tipo Alterado" = Table.TransformColumnTypes(#"Colunas Renomeadas",{{"Data", type date}}),
+    #"Ano Inserido" = Table.AddColumn(#"Tipo Alterado", "Ano", each Date.Year([Data]), Int64.Type),
+    #"Nome do Mês Inserido" = Table.AddColumn(#"Ano Inserido", "Nome do Mês", each Date.MonthName([Data]), type text),
+    #"Mês Inserido" = Table.AddColumn(#"Nome do Mês Inserido", "Mês", each Date.Month([Data]), Int64.Type),
+    #"Trimestre Inserido" = Table.AddColumn(#"Mês Inserido", "Trimestre", each Date.QuarterOfYear([Data]), Int64.Type),
+    #"Semana do Ano Inserida" = Table.AddColumn(#"Trimestre Inserido", "Semana do Ano", each Date.WeekOfYear([Data]), Int64.Type),
+    #"Semana do Mês Inserida" = Table.AddColumn(#"Semana do Ano Inserida", "Semana do Mês", each Date.WeekOfMonth([Data]), Int64.Type),
+    #"Dia da Semana Inserido" = Table.AddColumn(#"Semana do Mês Inserida", "Dia da Semana", each Date.DayOfWeek([Data]), Int64.Type),
+    #"Nome do Dia Inserido" = Table.AddColumn(#"Dia da Semana Inserido", "Nome do Dia", each Date.DayOfWeekName([Data]), type text),
+    #"Dia Inserido" = Table.AddColumn(#"Nome do Dia Inserido", "Dia do Mes", each Date.Day([Data]), Int64.Type),
+    Anomes = Table.AddColumn(#"Dia Inserido", "Anomes", each 
+Text.Combine ({Text.From([Ano]), Text.PadStart(Text.From([Mês]), 2, "0")}, "-"), type text
+),
+    #"Início do Mês Inserido" = Table.AddColumn(Anomes, "Início do Mês", each Date.StartOfMonth([Data]), type date),
+    #"Coluna Condicional Adicionada" = Table.AddColumn(#"Início do Mês Inserido", "Mes Abrev", each 
+if [Nome do Mês] = "janeiro" then "JAN" 
+else if [Nome do Mês] = "fevereiro" then "FEV" 
+else if [Nome do Mês] = "março" then "MAR" 
+else if [Nome do Mês] = "abril" then "ABR" 
+else if [Nome do Mês] = "maio" then "MAI" 
+else if [Nome do Mês] = "junho" then "JUN" 
+else if [Nome do Mês] = "julho" then "JUL" 
+else if [Nome do Mês] = "agosto" then "AGO" 
+else if [Nome do Mês] = "setembro" then "SET" 
+else if [Nome do Mês] = "outubro" then "OUT" 
+else if [Nome do Mês] = "novembro" then "NOV" 
+else "DEZ"),
+    MES_ANO = Table.AddColumn(#"Coluna Condicional Adicionada", "Mesano", each [Mes Abrev] & "/" &  Text.End(Text.From([Ano]),2))
+in
+    MES_ANO
