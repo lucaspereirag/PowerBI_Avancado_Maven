@@ -1,0 +1,29 @@
+m_qtd_total_solicitacoes_tarefas_acompanhamento = 
+SWITCH(
+    TRUE(),
+
+    SELECTEDVALUE('dClassificacao'[Classificação]) IN {
+        "Uso da Carta", "Teckey", "Tarefa - Solicitação de Cancelamento", 
+        "Em Análise", "Transferido", "Solicitação - Não necessário transferir"
+    },
+    [m_qtd_total_ftarefas_grafico_acompanhamento],
+
+    SELECTEDVALUE('dClassificacao'[Classificação]) IN {
+        "Golpe Externo","Solicitação de Cancelamento","Bloqueio de Venda",
+        "Venda em Reciprocidade","Falsa Contemplação","Abertura incorreta",
+        "Carta Contemplada","Fraude Interna AG - Economiário","Documento Fraudado",
+        "Em Análise","Outros","Falso Boleto","Falso Boleto - Não Cliente CXC",
+        "Dúvidas sobre Cobranças","Erro de Venda","Desconhece Aquisição",
+        "Alteração de Nome","Falsidade Ideológica Agt Caixa","Invasão de Conta",
+        "Autofraude","Indeferido Seg. Previsul","Em Análise Previsul","Alteração Cadastral"
+    },
+    [m_qtd_total_fsolicitacoes_grafico_acompanhamento],
+
+   
+    [m_qtd_total_fsolicitacoes_grafico_acompanhamento] + [m_qtd_total_ftarefas_grafico_acompanhamento]
+)
+
+
+
+m_INVERSAOGRAFICA_qtd_total_solicitacoes_tarefas_fechamento_acompanhamento = 
+-1 * [m_qtd_total_solicitacoes_tarefas_fechamento_acompanhamento]
